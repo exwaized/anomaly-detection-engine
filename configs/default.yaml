@@ -1,0 +1,22 @@
+# Anomaly Detection Engine — Default Configuration
+# Override any field by editing this file or passing --config to main.py
+
+# Concurrency
+max_workers: 8                  # Thread pool size for detector workers
+
+# Rolling baseline window
+baseline_window_days: 30        # Days of history to retain per dimension
+max_dimensions: 500             # Max unique (country, segment, metric) combos
+
+# Detector thresholds
+zscore_threshold: 3.0           # Alert if |z| > this value
+baseline_delta_pct: 20.0        # Alert if value deviates > X% from 7-day mean
+wtd_threshold_pct: 15.0         # Alert if WTD deviates > X% from prior week WTD
+mtd_threshold_pct: 10.0         # Alert if MTD deviates > X% from prior month MTD
+
+# Alerting
+alert_cooldown_minutes: 60.0    # Suppress repeat alerts within this window
+alert_output_path: outputs/alerts.jsonl
+
+# Ingestion
+poll_interval_sec: 2.0          # How often to poll each stream source
