@@ -16,7 +16,7 @@ from pathlib import Path
 from anomaly_engine.engine import AnomalyDetectionEngine
 from anomaly_engine.ingestion.stream import KafkaMockStream, FileQueueStream
 from anomaly_engine.utils.config import EngineConfig
-
+Path("outputs").mkdir(exist_ok=True)
 # ------------------------------------------------------------------
 # Logging setup
 # ------------------------------------------------------------------
@@ -87,9 +87,6 @@ def main() -> None:
 
     if args.workers:
         config.max_workers = args.workers
-
-    # Ensure output directory exists
-    Path("outputs").mkdir(exist_ok=True)
 
     # Build engine
     engine = AnomalyDetectionEngine(config=config)
