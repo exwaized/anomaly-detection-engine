@@ -109,9 +109,7 @@ anomaly-detection-engine/
 │   └── default.yaml            # Default engine configuration
 ├── scripts/
 │   └── generate_sample_data.py # Synthetic data generator for testing
-├── data/
-│   └── sample/                 # Sample JSONL metric files
-├── main.py                     # Entry point
+├── main.py                     # Entry point (CLI)
 ├── requirements.txt
 └── setup.py
 ```
@@ -160,6 +158,16 @@ cp configs/default.yaml configs/my_config.yaml
 python main.py --config configs/my_config.yaml
 ```
 
+### CLI options
+
+| Flag | Default | Description |
+|---|---|---|
+| `--config PATH` | built-in defaults | YAML config file |
+| `--stream {mock,file}` | `mock` | Synthetic stream or JSONL file watcher |
+| `--watch-dir DIR` | `data/incoming` | Directory watched when `--stream file` |
+| `--anomaly-prob P` | `0.05` | Anomaly injection rate (mock stream only) |
+| `--workers N` | from config | Override `max_workers` |
+
 ---
 
 ## Configuration
@@ -169,6 +177,7 @@ Edit `configs/default.yaml`:
 ```yaml
 max_workers: 8                 # Thread pool size
 baseline_window_days: 30       # Days of history per dimension
+max_dimensions: 500            # Max unique (country, segment, metric) combos
 zscore_threshold: 3.0          # Z-score alert threshold
 baseline_delta_pct: 20.0       # Baseline % deviation threshold
 wtd_threshold_pct: 15.0        # WTD % deviation threshold
@@ -243,4 +252,4 @@ class KafkaStream(MetricStream):
 
 ## License
 
-MIT
+MIT (add a `LICENSE` file before publishing)
